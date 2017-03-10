@@ -1,0 +1,26 @@
+<ons-navigator>
+  <ons-page>
+    <ons-toolbar class="navigation">
+      <div class="right">
+        <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()"><ons-icon icon="bars" style="color: white;"></ons-icon></ons-toolbar-button>
+      </div>
+      <div class="left">
+        <ons-toolbar-button>
+          <ons-icon icon="ion-compass" style="color: white;"></ons-icon>
+        </ons-toolbar-button>
+      </div>
+      <div class="center header">Totte!</div>
+    </ons-toolbar>
+    
+    <div style="text-align: center">
+      <h1>Top</h1>
+      <ons-button ng-click="app.slidingMenu.setMainPage('request_detail_page.html', {closeMenu: false})">
+        Detail Page
+      </ons-button>
+      
+      <!--<p> Click "Toggle Menu" to close/open menu, </p>
+      <p> You can also swipe the page left/right.  </p>
+      <img src="images/ico_swipe_right_s.png" alt="">-->
+    </div>
+  </ons-page>
+</ons-navigator>

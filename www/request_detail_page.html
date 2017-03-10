@@ -1,0 +1,19 @@
+<ons-page ng-controller="RequestDetailPage">
+  <ons-toolbar>
+    <div class="left">
+      <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
+    </div>
+    <div class="center">Page 2</div>
+  </ons-toolbar>
+  
+  <div style="text-align: center">
+    <h1>Request Detail Page</h1>
+    <ons-button ng-click="BackRequest();">Toggle Menu</ons-button>
+    <div ng-controller="AlbumController">
+      <ons-button ng-click="openPhotoAlbum();">OpenAlbum</ons-button>
+    </div>
+    <div ng-controller="TakePhotoController">
+      <ons-button ng-click="takePhoto();">Take Photo</ons-button>
+    </div>
+  </div>
+</ons-page>
