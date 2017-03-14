@@ -8,25 +8,45 @@
   <link rel="stylesheet" href="components/loader.css">
   <link rel="stylesheet" href="css/style.css">
   <script>
-      var module = ons.bootstrap('totte');
+      var networkConst = {
+          loginUrl: 'http://'
+      };
+      
+      var keys = {
+          token: 'authentication_token'
+      };
+      
+      var debug = {
+          email: 'harimanmon@gmail.com',
+          username: 'hogehoge',
+          password: 'hoegehoge'
+      };
+      
+      var html = {
+          login: 'login.html',
+          signup: 'signup.html'
+      };
+      
+      var getSignInUrl = function () {
+          
+      };
+
+      var module = ons.bootstrap('totte', ['onsen']);
       module.constant('T_URL', {
           loginUrl:'http://hogehoge.com'
       });
+      console.log('init');
+      console.log(localStorage.getItem('authentication_token'));
       module.controller('StartPage', function($scope, $http){
           $scope.LogInPage = function() {
-              $scope.myNavigator.pushPage('login.html', {animation: 'lift'})
+              $scope.myNavigator.pushPage(html.login, {animation: 'lift'})
           };
           $scope.SignUpPage = function() {
-              $scope.myNavigator.pushPage('signup.html', {animation: 'lift'})
+              $scope.myNavigator.pushPage(html.signup, {animation: 'lift'})
           };
       });
 
       module.controller('LoginPage', function($scope, $http){
-          $scope.user = {
-              email_address: "",
-              name: "",
-              password: ""
-          };
           $scope.LoginRequest = function() {
 //              var email = $scope.user.email_address;
 //              var username = $scope.user.name;
@@ -50,6 +70,7 @@
                   console.log(password);
                   console.log(email);
                   console.log(data);
+
               }).error(function(data, status, headers, config) {
                   alert("error");
               });
@@ -66,7 +87,7 @@
 //              var email = $scope.user.email_address;
 //              var username = $scope.user.name;
 //              var password = $scope.user.password;
-              var email = "harimanmon@yahoo.co.jp";
+              var email = "harimanmon@dummy.co.jp";
               var username = "hogehoge";
               var password = "hogehoge";
               var password_confirmation = "hogehoge";
@@ -80,11 +101,15 @@
                   data: parameter
               }).success(function(data, status, headers, config) {
                   app.slidingMenu.setSwipeable(true);
-                  console.log(username);
-                  console.log(password);
-                  console.log(email);
-                  console.log(data);
                   console.log(angular.fromJson(data));
+                  var authentication_token = data['authentication_token'];
+                  localStorage.setItem('authentication_token', authentication_token);
+                  var user = {
+                      username: username,
+                      password: password,
+                      email: email
+                  };
+                  localStorage.setItem('user', user);
                   alert("success signup: " + data['id'] + "," + data['authentication_token']);
                   $scope.myNavigator.pushPage('main.html', {animation: 'fade'})
               }).error(function(data, status, headers, config) {
@@ -128,8 +153,8 @@
 
 <!--StartPage.html-->
 <ons-template id="StartPage.html">
-  <ons-page ng-controller="StartPage" style="background-color:#f2924e">
-    <h1 class="totte_theme text_center">Totte!</h1>
+  <ons-page ng-controller="StartPage">
+    <h1 class="text_center">Totte!</h1>
     <ons-carousel style="height:60%; width: 100%; margin-top: 20%" swipeable overscrollable auto-scroll>
       <ons-carousel-item>
         <img src="images/ico_swipe_right_s.png" height="150px" style=" display: block; margin-left: auto; margin-right: auto" />
@@ -147,8 +172,10 @@
         <img src="images/ico_swipe_right_s.png" height="150px" style=" display: block; margin-left: auto; margin-right: auto" />
       </ons-carousel-item>
     </ons-carousel>
-    <button class="button button--outline" style="width:95%; display:block; margin-left: auto; margin-right: auto; border-color:white; color:white" ng-click="LogInPage()">LOG IN</button>
-    <button class="button button--outline" style="width:95%; display:block; margin-top:10px; margin-left: auto; margin-right: auto; border-color:white; color:white" ng-click="SignUpPage()">SIGN UP</button>
+    <section style="padding: 0 8px 8px">
+      <ons-button style="margin: 5px 0" modifier="large" ng-click="LogInPage()">LOG IN</ons-button>
+      <ons-button modifier="large" ng-click="SignUpPage()">SIGN UP</ons-button>
+    </section>
   </ons-page>
 </ons-template>
 </body>
