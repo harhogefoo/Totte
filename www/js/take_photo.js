@@ -15,7 +15,7 @@ function takePhoto () {
 
     //A callback function when snapping picture is success.
     function onSuccess (imageData) {
-        var image = document.getElementById ('snappedPicture');
+        var image = document.getElementById ('takenPhoto');
         image.src = "data:image/jpeg;base64," + imageData;
     }
 

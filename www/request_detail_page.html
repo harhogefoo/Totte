@@ -3,7 +3,7 @@
     <div class="left">
       <ons-toolbar-button ng-click="app.slidingMenu.toggleMenu()"><ons-icon icon="bars"></ons-icon></ons-toolbar-button>
     </div>
-    <div class="center">Page 2</div>
+    <div class="center">Request Detail Page</div>
   </ons-toolbar>
   
   <div style="text-align: center">
@@ -12,8 +12,11 @@
     <div ng-controller="AlbumController">
       <ons-button ng-click="openPhotoAlbum();">OpenAlbum</ons-button>
     </div>
+    <img id="albumPhoto" src="" width="150" height="150">
+  
     <div ng-controller="TakePhotoController">
       <ons-button ng-click="takePhoto();">Take Photo</ons-button>
     </div>
+    <img id="takenPhoto" src="" width="150" height="150">
   </div>
 </ons-page>

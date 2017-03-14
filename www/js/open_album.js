@@ -25,8 +25,8 @@ function openPhotoAlbum () {
 }
 
 function onSuccess (imageURI) {
-    var largeImage = document.getElementById ('picture');
-    largeImage.style.display = 'block';
+    var largeImage = document.getElementById ('albumPhoto');
+    // largeImage.style.display = 'block';
     largeImage.src = imageURI;
 }
 

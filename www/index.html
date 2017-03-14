@@ -21,14 +21,15 @@
       var html = {
           login: 'login.html',   // ログインページ
           signup: 'signup.html', // 新規登録
-          main: 'main.html',     // メインページ
-          request_detail: 'request_detail.html'
+          main: 'main.html',     // メインページ(依頼一覧ページ)
+          request_detail: 'request_detail_page.html' // 依頼詳細ページ
       };
       
       var rootUrl = 'https://floating-caverns-41338.herokuapp.com/';
       var urls = {
           login: rootUrl + 'users/sign_in.json',
-          signup: rootUrl + 'users.json'
+          signup: rootUrl + 'users.json',
+          
       };
       
       var module = ons.bootstrap('totte', ['onsen']);
@@ -60,13 +61,8 @@
                   data: parameter
               }).success(function(data, status, headers, config) {
                   app.slidingMenu.setSwipeable(true);
-                  $scope.myNavigator.pushPage('main.html', {animation: 'fade'})
+                  $scope.myNavigator.pushPage(html.main, {animation: 'fade'})
                   alert("success login: " + username + "," + password);
-                  console.log(username);
-                  console.log(password);
-                  console.log(email);
-                  console.log(data);
-
               }).error(function(data, status, headers, config) {
                   alert("error");
               });
@@ -107,10 +103,9 @@
                   };
                   localStorage.setItem('user', user);
                   alert("success signup: " + data['id'] + "," + data[keys.token]);
+                  
                   $scope.myNavigator.pushPage(html.main, {animation: 'fade'})
               }).error(function(data, status, headers, config) {
-                  console.log(status);
-                  console.log(data);
                   if ('email' in data["errors"]) {
                       alert(email + ' ' + data["errors"]["email"]);
                   }
@@ -126,7 +121,8 @@
 
       module.controller('RequestDetailPage', function($scope, $http){
           $scope.BackRequest = function() {
-              $scope.myNavigator.popPage(html.main, {animation: 'fade'})
+              $scope.myNavigator.popPage();
+              //$scope.myNavigator.popPage('main.html', {animation: 'fade'})
           }
       });
   </script>
