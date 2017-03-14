@@ -24,7 +24,14 @@
       
       var html = {
           login: 'login.html',
-          signup: 'signup.html'
+          signup: 'signup.html',
+          main: 'main.html'
+      };
+      
+      var rootUrl = 'https://floating-caverns-41338.herokuapp.com/';
+      var urls = {
+          login: rootUrl + 'users/sign_in.json',
+          signup: rootUrl + 'users.json'
       };
       
       var getSignInUrl = function () {
@@ -35,8 +42,7 @@
       module.constant('T_URL', {
           loginUrl:'http://hogehoge.com'
       });
-      console.log('init');
-      console.log(localStorage.getItem('authentication_token'));
+      console.log(localStorage.getItem(keys.token));
       module.controller('StartPage', function($scope, $http){
           $scope.LogInPage = function() {
               $scope.myNavigator.pushPage(html.login, {animation: 'lift'})
@@ -60,7 +66,7 @@
                   headers: {
                       'Content-Type' : 'application/json'
                   },
-                  url: 'https://floating-caverns-41338.herokuapp.com/users/sign_in.json',
+                  url: urls.login,
                   data: parameter
               }).success(function(data, status, headers, config) {
                   app.slidingMenu.setSwipeable(true);
@@ -97,21 +103,21 @@
                   headers: {
                       'Content-Type' : 'application/json'
                   },
-                  url: 'https://floating-caverns-41338.herokuapp.com/users.json',
+                  url: urls.signup,
                   data: parameter
               }).success(function(data, status, headers, config) {
                   app.slidingMenu.setSwipeable(true);
                   console.log(angular.fromJson(data));
-                  var authentication_token = data['authentication_token'];
-                  localStorage.setItem('authentication_token', authentication_token);
+                  var authentication_token = data[keys.token];
+                  localStorage.setItem(keys.token, authentication_token);
                   var user = {
                       username: username,
                       password: password,
                       email: email
                   };
                   localStorage.setItem('user', user);
-                  alert("success signup: " + data['id'] + "," + data['authentication_token']);
-                  $scope.myNavigator.pushPage('main.html', {animation: 'fade'})
+                  alert("success signup: " + data['id'] + "," + data[keys.token]);
+                  $scope.myNavigator.pushPage(html.main, {animation: 'fade'})
               }).error(function(data, status, headers, config) {
                   console.log(status);
                   console.log(data);
@@ -130,7 +136,7 @@
 
       module.controller('RequestDetailPage', function($scope, $http){
           $scope.BackRequest = function() {
-              $scope.myNavigator.popPage('main.html', {animation: 'fade'})
+              $scope.myNavigator.popPage(html.main, {animation: 'fade'})
           }
       });
   </script>
