@@ -3,15 +3,20 @@
     <h1>Login</h1>
     <div style="text-align: center">
       <section style="padding: 8px">
+        <input id="email" ng-model="user.email_address" class="text-input" placeholder="Email" style="display: block; width: 100%">
+      </section>
+      
+      <section style="padding: 8px">
         <input id="username" ng-model="user.name" class="text-input" placeholder="Username" style="display: block; width: 100%">
       </section>
       
       <section style="padding: 0 8px 8px">
-        <input type="password" id="password" ng-model="user.password" class="text-input" placeholder="Password" style="display: block; width: 100%;"></input>
+        <input type="password" id="password" ng-model="user.password" class="text-input" placeholder="Password" style="display: block; width: 100%;">
       </section>
       
       <section style="padding: 0 8px 8px">
         <ons-button ng-click="LoginRequest()" modifier="large">Login</ons-button>
+        <ons-progress-circular indeterminate></ons-progress-circular>
       </section>
     </div>
   </div>

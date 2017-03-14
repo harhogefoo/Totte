@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="TotteModule">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -8,46 +8,101 @@
   <link rel="stylesheet" href="components/loader.css">
   <link rel="stylesheet" href="css/style.css">
   <script>
-      var module = ons.bootstrap();
+      var module = ons.bootstrap('totte');
+      module.constant('T_URL', {
+          loginUrl:'http://hogehoge.com'
+      });
       module.controller('StartPage', function($scope, $http){
           $scope.LogInPage = function() {
               $scope.myNavigator.pushPage('login.html', {animation: 'lift'})
-          }
-
+          };
           $scope.SignUpPage = function() {
               $scope.myNavigator.pushPage('signup.html', {animation: 'lift'})
-          }
+          };
       });
 
       module.controller('LoginPage', function($scope, $http){
           $scope.user = {
+              email_address: "",
               name: "",
               password: ""
           };
           $scope.LoginRequest = function() {
-              var username = $scope.user.name;
-              var password = $scope.user.password;
+//              var email = $scope.user.email_address;
+//              var username = $scope.user.name;
+//              var password = $scope.user.password;
+              var email = "harimanmon@yahoo.co.jp";
+              var username = "hogehoge";
+              var password = "hogehoge";
+              var parameter = JSON.stringify({user: { email: email, name: username, password: password }});
               $http({
                   method: 'GET',
-                  url: 'http://google.com'
+                  headers: {
+                      'Content-Type' : 'application/json'
+                  },
+                  url: 'https://floating-caverns-41338.herokuapp.com/users/sign_in.json',
+                  data: parameter
               }).success(function(data, status, headers, config) {
                   app.slidingMenu.setSwipeable(true);
                   $scope.myNavigator.pushPage('main.html', {animation: 'fade'})
                   alert("success login: " + username + "," + password);
                   console.log(username);
                   console.log(password);
+                  console.log(email);
+                  console.log(data);
               }).error(function(data, status, headers, config) {
                   alert("error");
               });
           }
       });
-      
+
+      module.controller('SignupPage', function($scope, $http){
+          $scope.user = {
+              email_address: "",
+              name: "",
+              password: ""
+          };
+          $scope.SignupRequest = function() {
+//              var email = $scope.user.email_address;
+//              var username = $scope.user.name;
+//              var password = $scope.user.password;
+              var email = "harimanmon@yahoo.co.jp";
+              var username = "hogehoge";
+              var password = "hogehoge";
+              var password_confirmation = "hogehoge";
+              var parameter = JSON.stringify({user: { email: email, name: username, password: password, password_confirmation: password_confirmation }});
+              $http({
+                  method: 'POST',
+                  headers: {
+                      'Content-Type' : 'application/json'
+                  },
+                  url: 'https://floating-caverns-41338.herokuapp.com/users.json',
+                  data: parameter
+              }).success(function(data, status, headers, config) {
+                  app.slidingMenu.setSwipeable(true);
+                  console.log(username);
+                  console.log(password);
+                  console.log(email);
+                  console.log(data);
+                  console.log(angular.fromJson(data));
+                  alert("success signup: " + data['id'] + "," + data['authentication_token']);
+                  $scope.myNavigator.pushPage('main.html', {animation: 'fade'})
+              }).error(function(data, status, headers, config) {
+                  console.log(status);
+                  console.log(data);
+                  if ('email' in data["errors"]) {
+                      alert(email + ' ' + data["errors"]["email"]);
+                  }
+              });
+          }
+      });
+
       module.controller('MainPage', function($scope, $http){
           $scope.DetailRequest = function() {
               $scope.myNavigator.pushPage('request_detail_page.html', {animation: 'fade'})
           }
       });
-      
+
       module.controller('RequestDetailPage', function($scope, $http){
           $scope.BackRequest = function() {
               $scope.myNavigator.popPage('main.html', {animation: 'fade'})
