@@ -8,10 +8,6 @@
   <link rel="stylesheet" href="components/loader.css">
   <link rel="stylesheet" href="css/style.css">
   <script>
-      var networkConst = {
-          loginUrl: 'http://'
-      };
-      
       var keys = {
           token: 'authentication_token'
       };
@@ -23,9 +19,10 @@
       };
       
       var html = {
-          login: 'login.html',
-          signup: 'signup.html',
-          main: 'main.html'
+          login: 'login.html',   // ログインページ
+          signup: 'signup.html', // 新規登録
+          main: 'main.html',     // メインページ
+          request_detail: 'request_detail.html'
       };
       
       var rootUrl = 'https://floating-caverns-41338.herokuapp.com/';
@@ -34,14 +31,7 @@
           signup: rootUrl + 'users.json'
       };
       
-      var getSignInUrl = function () {
-          
-      };
-
       var module = ons.bootstrap('totte', ['onsen']);
-      module.constant('T_URL', {
-          loginUrl:'http://hogehoge.com'
-      });
       console.log(localStorage.getItem(keys.token));
       module.controller('StartPage', function($scope, $http){
           $scope.LogInPage = function() {
@@ -130,7 +120,7 @@
 
       module.controller('MainPage', function($scope, $http){
           $scope.DetailRequest = function() {
-              $scope.myNavigator.pushPage('request_detail_page.html', {animation: 'fade'})
+              $scope.myNavigator.pushPage(html.request_detail, {animation: 'fade'})
           }
       });
 
